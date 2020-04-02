@@ -13,7 +13,7 @@ mypath = "photos/"
 image_list = []
 complete_list = []
 current = 0
-currentImage = str
+currentImage = ""
 outputFile = open("output.csv", 'w')
 w = csv.writer(outputFile)
 completeGPSfiles = open('GPSCompletedImages.txt','a')
@@ -54,18 +54,20 @@ def resize(w_box, h_box, pil_image):
 
 #function to flip through the images in the GUI
 def move(delta):
-    global current, image_list
+    global current, image_list, currentImage
+    print(f'59. CurrentImage is currently {type(currentImage)}: {currentImage}')
     if not (0 <= current + delta < len(image_list)):
         messagebox.showinfo('End', 'No more image.')
         return
     current += delta
     imgStr = 'photos/' + image_list[current]
     img =  Image.open(imgStr)
-    
+    print(f'66. CurrentImage is currently {type(currentImage)}: {currentImage}')
     photo = ImageTk.PhotoImage(resize(960, 540, img))    
     label['text'] = image_list[current]
     label['image'] = photo
     label.photo = photo
+    print(f'70. CurrentImage is currently {type(currentImage)}: {currentImage}')
     
 
 #obtain lat/long from Google api
@@ -120,20 +122,23 @@ label.grid(row=5,column = 0, columnspan = 3)
 root.bind('<Return>', callback)
 
 def main():
+    global currentImage
     for (dirpath, dirnames, filenames) in os.walk(mypath):
         for x in filenames:
             if x[-3:].upper() == "JPG":
                 currentImage = mypath + x
-                print(type(currentImage))
+                print(f'130. CurrentImage is currently {type(currentImage)}: {currentImage}')
                 f = open(currentImage, 'rb')
                 if not checkGPS(f):
                     image_list.append(x)
                 else:
                     with open("GPSCompletedImages.txt", "a") as file_object:
                         file_object.write(x + '\n')
-            
+    pp.pprint(image_list)
+    print(f'138. CurrentImage is currently {type(currentImage)}: {currentImage}')        
     move(0)
     root.mainloop()
     outputFile.close()
 
-main()
+if __name__ == '__main__':
+    main()
