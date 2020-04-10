@@ -32,14 +32,25 @@ def checkGPS(image):
     #         w.writerow([tag,tags[tag]])
     for key, val in tags.items():
         if key in ('GPS GPSLatitude'):    
-            # w.writerow(['name',image])
+            print('**' + currentImage)
             return True
     return False
 
 def addGPSTags(curLat, curLong):
     photo = gpsphoto.GPSPhoto(currentImage)
+    rawDataBefore = gpsphoto.getRawData(currentImage)
+    w.writerow(['name*******************************************************BEFORE', currentImage])
+    for tag in rawDataBefore.keys():
+        if tag not in ('JPEGThumbnail', 'TIFFThumbnail', 'Filename', 'EXIF MakerNote'):
+            w.writerow([tag,rawDataBefore[tag]])
     info = gpsphoto.GPSInfo((curLat, curLong))
     photo.modGPSData(info, currentImage)
+    rawDataAfter = gpsphoto.getRawData(currentImage)
+    w.writerow(['name*******************************************************AFTER', currentImage])
+    for tag in rawDataAfter.keys():
+        if tag not in ('JPEGThumbnail', 'TIFFThumbnail', 'Filename', 'EXIF MakerNote'):
+            w.writerow([tag,rawDataAfter[tag]])
+    
 
 
 #make the image a regular size to fit the GUI
@@ -55,19 +66,18 @@ def resize(w_box, h_box, pil_image):
 #function to flip through the images in the GUI
 def move(delta):
     global current, image_list, currentImage
-    print(f'59. CurrentImage is currently {type(currentImage)}: {currentImage}')
     if not (0 <= current + delta < len(image_list)):
         messagebox.showinfo('End', 'No more image.')
         return
     current += delta
     imgStr = 'photos/' + image_list[current]
+    currentImage = imgStr
+    print("74 the image is: " + imgStr)
     img =  Image.open(imgStr)
-    print(f'66. CurrentImage is currently {type(currentImage)}: {currentImage}')
     photo = ImageTk.PhotoImage(resize(960, 540, img))    
     label['text'] = image_list[current]
     label['image'] = photo
     label.photo = photo
-    print(f'70. CurrentImage is currently {type(currentImage)}: {currentImage}')
     
 
 #obtain lat/long from Google api
@@ -84,7 +94,9 @@ def getLocation(loc1="5408 Jamestown Rd", loc2="San Diego, CA"):
 def callback(*args):
     val1 = e1.get()
     val2 = e2.get()
+    print(f'{val1} and {val2}')
     curLat, curLong = getLocation(val1, val2)
+    print(f'{curLat}, {curLong}')
     addGPSTags(curLat, curLong)
     move(+1)
 
@@ -127,15 +139,13 @@ def main():
         for x in filenames:
             if x[-3:].upper() == "JPG":
                 currentImage = mypath + x
-                print(f'130. CurrentImage is currently {type(currentImage)}: {currentImage}')
                 f = open(currentImage, 'rb')
                 if not checkGPS(f):
                     image_list.append(x)
                 else:
                     with open("GPSCompletedImages.txt", "a") as file_object:
                         file_object.write(x + '\n')
-    pp.pprint(image_list)
-    print(f'138. CurrentImage is currently {type(currentImage)}: {currentImage}')        
+    pp.pprint(image_list)    
     move(0)
     root.mainloop()
     outputFile.close()
