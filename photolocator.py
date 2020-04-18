@@ -13,7 +13,6 @@ mypath = "photos/"
 image_list = []
 complete_list = []
 current = 0
-currentImage = ""
 outputFile = open("output.csv", 'w')
 w = csv.writer(outputFile)
 completeGPSfiles = open('GPSCompletedImages.txt','a')
@@ -33,7 +32,7 @@ def checkGPS(image):
     for key, val in tags.items():
         if key in ('GPS GPSLatitude'):    
             print('**' + currentImage)
-            return True
+            return False
     return False
 
 def addGPSTags(curLat, curLong):
@@ -137,7 +136,7 @@ def main():
     global currentImage
     for (dirpath, dirnames, filenames) in os.walk(mypath):
         for x in filenames:
-            if x[-3:].upper() == "JPG":
+            if x[-3:].upper() == "JPG" or x[-4:].upper() == "JPEG":
                 currentImage = mypath + x
                 f = open(currentImage, 'rb')
                 if not checkGPS(f):

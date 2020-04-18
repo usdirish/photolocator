@@ -3,7 +3,30 @@ name*******************************************************,"<_io.BufferedReader
 name*******************************************************,<_io.BufferedReader name='photos/TestPhoto.JPG'>
 name*******************************************************,<_io.BufferedReader name='photos/20010405 the six of us.JPG'>
 name*******************************************************,<_io.BufferedReader name='photos/20070513 DSCN2081.JPG'>
+name*******************************************************,<_io.BufferedReader name='photos/IMG_0617.jpeg'>
 name*******************************************************,<_io.BufferedReader name='photos/20130825 IMG_1101.JPG'>
 name*******************************************************,<_io.BufferedReader name='photos/20130420IMG_0815.JPG'>
 name*******************************************************,<_io.BufferedReader name='photos/20070416 IMG_0758.JPG'>
 name*******************************************************,<_io.BufferedReader name='photos/20130402 IMG_7816.JPG'>
+name*******************************************************BEFORE,photos/20010405 the six of us.JPG
+GPS GPSLatitudeRef,N
+GPS GPSLatitude,"[32, 42, 3983/100]"
+GPS GPSLongitudeRef,W
+GPS GPSLongitude,"[117, 9, 369601/10000]"
+GPS GPSAltitudeRef,0
+GPS GPSAltitude,0
+GPS GPSTimeStamp,"[15, 14, 6]"
+GPS GPSProcessingMethod,"[65, 83, 67, 73, 73, 0, 0, 0, 71, 80, 83]"
+GPS GPSDate,2020:04:10
+Image GPSInfo,1325
+name*******************************************************AFTER,photos/20010405 the six of us.JPG
+GPS GPSLatitudeRef,N
+GPS GPSLatitude,"[32, 42, 3983/100]"
+GPS GPSLongitudeRef,W
+GPS GPSLongitude,"[117, 9, 369601/10000]"
+GPS GPSAltitudeRef,0
+GPS GPSAltitude,0
+GPS GPSTimeStamp,"[15, 8, 29]"
+GPS GPSProcessingMethod,"[65, 83, 67, 73, 73, 0, 0, 0, 71, 80, 83]"
+GPS GPSDate,2020:04:18
+Image GPSInfo,1325
